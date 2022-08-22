@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1 class="text text-center">Songs</h1>
+    <button class="btn btn-primary">load metallica</button>
+    <div class="container">
+        <div class="row">
+           <!-- div comes here-->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+  <script>
+     window.onload = () => {
+        const btn1= document.querySelector("button")
+        btn1.addEventListener("click",loadMetal)
+     }
+
+
+
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '4d0dadd59dmsh06eb1c493f05f48p14161ejsnbb15ee3cb168',
+		'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
+	}
+};
+
+const loadMetal= () => {
+fetch('https://deezerdevs-deezer.p.rapidapi.com/search?q=metallica', options)
+	.then(response => response.json())
+	.then(data1 => {
+
+     console.log(data1.data)
+     console.log(data1.data[0])
+     console.log(data1.data[0].title)
+     console.log(data1.data[0].md5_image)
+
+     const table = document.querySelector(".container > .row")
+     console.log(table)
+
+     const songs = data1.data
+
+     for(let i=0; i < songs.lenght; i++) {
+        const song = songs[i]
+        console.log(song)
+        const col = document.createElement("div")
+        col.classList = "col-sm-6 col-md-4 col-lg-3"
+        col.innerHTML = `
+                                    <div class="card">
+                                        <img src=${song.md5_image} class="card-img-top" alt=${song.title}>
+                                        <div class="card-body">
+                                            <h5 class="card-title">${song.title}</h5>
+                                        </div>
+                                    </div>
+
+                    `
+        table.appendChild(col)
+     }
+     })
+	.catch(err => console.error(err));
+}
+
+
+
+
+
+
+
+   
+  </script>
+
+
+  </body>
+</html>
